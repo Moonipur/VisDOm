@@ -18,7 +18,7 @@
     
     conda install pandas numpy matplotlib openpyxl math
     
-  Dowmload VOD suite-packages with git-clone
+  Download VOD suite-packages with git-clone
     
     git clone https://github.com/Moonipur/VisualizationOmicsData-VOD.git
     
