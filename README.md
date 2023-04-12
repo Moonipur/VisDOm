@@ -1,5 +1,6 @@
 # Visualization of Omics Data (VOD)
 
+  Suite-packages of python script for visualizing omics data
 
 # Requirment packages
 
@@ -19,4 +20,18 @@
     
   Dowmload VOD suite-packages with git-clone
     
-    git clone 
+    git clone https://github.com/Moonipur/VisualizationOmicsData-VOD.git
+    
+    cd VisualizationOmicsData-VOD/
+    
+    chmod +x *.sh
+    
+    ./Install.sh
+    
+# Developed by
+
+  Songphon Sutthitthasakul (Moonipur)
+
+  email: songphon_sutthittha@cmu.ac.th
+  
+# Please contact with us if you have any problem with our program
