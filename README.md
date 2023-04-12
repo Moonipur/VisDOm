@@ -1,1 +1,1 @@
-# Visualization-of-Omics-Data-VOD-
+# Visualization of Omics Data (VOD)
