@@ -10,7 +10,7 @@
   
 # Initial installation step by step
 
-  Ceate conda environment
+  Create conda environment
     
     conda create -n VOD python=3.10
     
