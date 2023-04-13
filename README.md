@@ -32,13 +32,7 @@
 
     cd VisualizationOmicsData-VOD/
     
-    git add .
-    
-    git status
-    
-    git commit -m "type any your massage here"
-    
-    git push
+    git pull origin main
     
 # Developed by
 
