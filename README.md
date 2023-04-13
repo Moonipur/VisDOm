@@ -28,6 +28,18 @@
     
     ./Install.sh
     
+# Check and update the latest version
+
+    cd VisualizationOmicsData-VOD/
+    
+    git add .
+    
+    git status
+    
+    git commit -m "type any your massage here"
+    
+    git push
+    
 # Developed by
 
   Songphon Sutthitthasakul (Moonipur)
