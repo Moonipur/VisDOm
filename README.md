@@ -6,7 +6,7 @@
 
   Python (version >= 3.10)
   
-  Pandas, Numpy, Matplotlib, Openpyxl, Math
+  Pandas, Numpy, Matplotlib, Seaborn, Openpyxl, Math
   
 # Initial installation step by step
 
@@ -16,7 +16,7 @@
     
     conda activate VOD
     
-    conda install pandas numpy matplotlib openpyxl math
+    conda install pandas numpy matplotlib seaborn openpyxl math
     
   Download VOD suite-packages with git-clone
     
