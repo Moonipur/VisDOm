@@ -8,7 +8,7 @@
   
   Pandas, Numpy, Matplotlib, Openpyxl, Math
   
-# Initial installation
+# Initial installation step by step
 
   Install with conda environment
     
