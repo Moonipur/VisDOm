@@ -49,6 +49,14 @@ Parser.add_argument(
     help='color of dots that represent NOT significant (default: silver)'
     )
 Parser.add_argument(
+    '-top', '--topRankLabel', default=10, required=False, type=int,
+    help='number of top rank dot labels (default: 10)'
+    )
+Parser.add_argument(
+    '--interest', default='no', required=False, choices=['yes','no'],
+    help='label the interest gene or protein dots in figure (default: no)'
+    )
+Parser.add_argument(
     '--Title', default='Volcano plot', required=False, type=str,
     help='the title of figure (default: Volcano plot)'
     )
@@ -88,15 +96,17 @@ def class_dot(data_path, log2, threshold):
             class_.append(dot)
 
     df_data['Class'] = class_
-    df_data.to_csv(f"{data_path[:-4]}_classDot.csv")
+
+    df_data.to_csv(f"{data_path[:-4]}_classDot.csv", index=False)
     print('>> Classification of expressions <<')
     print(df_data)
     print("-------------------------------------------------------------------------------------------------------------------------------------")
     re = [f"{data_path[:-4]}_classDot.csv", log2, signif]
     return(re)
 
-def plot_(data_path, up, down, non, splitLine, grid, title, save_fig, fig_name):
+def plot_(data_path, up, down, non, splitLine, grid, title, save_fig, fig_name, top_dot, interestG):
     df_data = pd.read_csv(data_path[0])
+
     plt.figure(figsize=(100,100), )
     plt.rcParams.update({'font.size': 130})
 
@@ -108,14 +118,67 @@ def plot_(data_path, up, down, non, splitLine, grid, title, save_fig, fig_name):
     ax.spines['right'].set_linewidth(15)
 
 
-    groups = ('Up-regulation','Not significant','Down-regulation')
+    groups = ('Up-regulated','Not significant','Down-regulated')
     dot_up = df_data.loc[df_data['Class'] == 'UP']
     dot_down = df_data.loc[df_data['Class'] == 'DOWN']
     dot_not = df_data.loc[df_data['Class'] == 'NOT']
 
+
     plt.scatter(x=dot_up['Log2FC'], y=dot_up['logP_value'], marker='o', s=2000, c=up)
     plt.scatter(x=dot_not['Log2FC'], y=dot_not['logP_value'], marker='o', s=2000, c=non)
     plt.scatter(x=dot_down['Log2FC'], y=dot_down['logP_value'], marker='o', s=2000, c=down)
+
+    if interestG == 'yes':
+        inter = df_data.loc[df_data['INTEREST'] == 'interest']
+        for i in inter.index:
+            if inter['Class'][i] == 'DOWN':
+                plt.annotate(
+                    text=inter['SYMBOL'][i], xy=(inter['Log2FC'][i], inter['logP_value'][i]),
+                    xytext=(inter['Log2FC'][i] - 1, inter['logP_value'][i] + 0.5),
+                    arrowprops=dict(arrowstyle="-|>", color='black', linewidth=4),
+                    bbox=dict(boxstyle="round, pad=0.2",fc="white", alpha=0.5), fontsize=100
+                    )
+            elif inter['Class'][i] == 'UP':
+                plt.annotate(
+                    text=inter['SYMBOL'][i], xy=(inter['Log2FC'][i], inter['logP_value'][i]),
+                    xytext=(inter['Log2FC'][i] + 0.3, inter['logP_value'][i] + 0.5),
+                    arrowprops=dict(arrowstyle="-|>", color='black', linewidth=4),
+                    bbox=dict(boxstyle="round, pad=0.2",fc="white", alpha=0.5), fontsize=100
+                    )
+            elif inter['Class'][i] == 'NOT':
+                plt.annotate(
+                    text=inter['SYMBOL'][i], xy=(inter['Log2FC'][i], inter['logP_value'][i]),
+                    xytext=(inter['Log2FC'][i], inter['logP_value'][i] - 0.5),
+                    arrowprops=dict(arrowstyle="-|>", color='black', linewidth=4),
+                    bbox=dict(boxstyle="round, pad=0.2",fc="white", alpha=0.5), fontsize=100
+                    )
+        
+    elif interestG == 'no':
+        dot_top = df_data.sort_values(by='logP_value', ascending=False, ignore_index=True)
+        top_lab = dot_top.iloc[:top_dot]
+        for i in top_lab.index:
+            if top_lab['Class'][i] == 'DOWN':
+                plt.annotate(
+                    text=top_lab['SYMBOL'][i], xy=(top_lab['Log2FC'][i], top_lab['logP_value'][i]),
+                    xytext=(top_lab['Log2FC'][i] - 1, top_lab['logP_value'][i] + 0.5),
+                    arrowprops=dict(arrowstyle="-|>", color='black', linewidth=4),
+                    bbox=dict(boxstyle="round, pad=0.2",fc="white", alpha=0.5), fontsize=100
+                    )
+            elif top_lab['Class'][i] == 'UP':
+                plt.annotate(
+                    text=top_lab['SYMBOL'][i], xy=(top_lab['Log2FC'][i], top_lab['logP_value'][i]),
+                    xytext=(top_lab['Log2FC'][i] + 0.3, top_lab['logP_value'][i] + 0.5),
+                    arrowprops=dict(arrowstyle="-|>", color='black', linewidth=4),
+                    bbox=dict(boxstyle="round, pad=0.2",fc="white", alpha=0.5), fontsize=100
+                    )
+            elif top_lab['Class'][i] == 'NOT':
+                plt.annotate(
+                    text=top_lab['SYMBOL'][i], xy=(top_lab['Log2FC'][i], top_lab['logP_value'][i]),
+                    xytext=(top_lab['Log2FC'][i], top_lab['logP_value'][i] - 0.5),
+                    arrowprops=dict(arrowstyle="-|>", color='black', linewidth=4),
+                    bbox=dict(boxstyle="round, pad=0.2",fc="white", alpha=0.5), fontsize=100
+                    )
+        
 
     x_label = '$log_{2} FoldChange$'
     y_label = '$-log_{10} (P-value)$'
@@ -146,19 +209,19 @@ if __name__ == "__main__":
     Head_prog()
     outdir = Check_outdir(args.outdir)
     file = Check_file_type(args.input, outdir)
-    file_df_path = Organize_file(file, type_='volcano', p=args.ptype)
+    file_df_path = Organize_file(file, type_='volcano', p=args.ptype, inter=args.interest)
     if args.ptype == 'logP_value':
         path_df = class_dot(file_df_path, log2=args.log2, threshold=args.threshold)
         plot_(
             path_df, up=args.upReguColor, down=args.downReguColor, non=args.nonSigniColor,
-            splitLine=args.splitLine, grid=args.gridLine,
-            title=args.Title, save_fig=args.saveFig, fig_name=file
+            splitLine=args.splitLine, grid=args.gridLine, top_dot=args.topRankLabel,
+            title=args.Title, save_fig=args.saveFig, fig_name=file, interestG=args.interest
         )
     elif args.ptype == 'P_value':
         log10P_df = cal_log10P(file_df_path, outdir)
         path_df = class_dot(log10P_df, log2=args.log2, threshold=args.threshold)
         plot_(
             path_df, up=args.upReguColor, down=args.downReguColor, non=args.nonSigniColor,
-            splitLine=args.splitLine, grid=args.gridLine,
-            title=args.Title, save_fig=args.saveFig, fig_name=file
+            splitLine=args.splitLine, grid=args.gridLine, top_dot=args.topRankLabel,
+            title=args.Title, save_fig=args.saveFig, fig_name=file, interestG=args.interest
         )
