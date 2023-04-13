@@ -40,8 +40,8 @@
     
 # Developed by
 
-  Songphon Sutthitthasakul (Moonipur)
+    Songphon Sutthitthasakul (Moonipur)
 
-  e-mail: songphon_sutthittha@cmu.ac.th
+    e-mail: songphon_sutthittha@cmu.ac.th
   
   **Please contact with us if you have any problem with our program
