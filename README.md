@@ -34,6 +34,10 @@
     
     git pull origin main
     
+    chmod +x *.sh
+    
+    ./Update.sh
+    
 # Developed by
 
   Songphon Sutthitthasakul (Moonipur)
