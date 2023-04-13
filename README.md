@@ -28,7 +28,7 @@
     
     ./Install.sh
     
-# Check and update the latest version
+  Check and update the latest version
 
     cd VisualizationOmicsData-VOD/
     
