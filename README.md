@@ -1,6 +1,6 @@
 # Visualization of Omics Data (VOD)
 
-  Suite-packages of python script for visualizing omics data
+  Suite-software packages of python script for visualizing omics data
 
 # Requirment packages
 
