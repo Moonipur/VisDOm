@@ -28,6 +28,8 @@
     
     ./Install.sh
     
+    source ~/.bashrc
+    
   Check and update the latest version
 
     cd VisualizationOmicsData-VOD/
@@ -37,6 +39,8 @@
     chmod +x *.sh
     
     ./Update.sh
+    
+    source ~/.bashrc
     
 # Developed by
 
