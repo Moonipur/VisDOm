@@ -28,6 +28,11 @@ def Check_file_type(filepath, outdir):
         exit()
 
 def Check_outdir(outpath):
+    if outpath[-1] != '/':
+        outpath = outpath + '/'
+    else:
+        pass
+
     if os.path.isdir(outpath):
         print("-------------------------------------------------------------------------------------------------------------------------------------")
         print(f"**Pass: Your outdir is '{os.path.dirname(outpath)}'")
