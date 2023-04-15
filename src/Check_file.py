@@ -30,7 +30,7 @@ def Check_file_type(filepath, outdir):
 def Check_outdir(outpath):
     if os.path.isdir(outpath):
         print("-------------------------------------------------------------------------------------------------------------------------------------")
-        print(f"**Pass: Your outdir '{os.path.dirname(outpath)}' is exist")
+        print(f"**Pass: Your outdir is '{os.path.dirname(outpath)}'")
         return(os.path.dirname(outpath))
     else:
         print("-------------------------------------------------------------------------------------------------------------------------------------")

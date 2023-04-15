@@ -4,9 +4,10 @@ def heat(file_, labels):
     df = pd.read_csv(f"{file_}")
     df.columns = df.columns.str.strip().str.upper()
     symbol = []
-    ex = []
+    expression = []
+    sam = []
     label_g = [x.upper() for x in labels]
-
+    
     for col in df.columns:
         if col == 'SYMBOL':
             symbol.append('SYMBOL')
@@ -16,10 +17,17 @@ def heat(file_, labels):
             symbol.append('PROTEIN')
         elif col == 'NAME':
             symbol.append('NAME')
+        elif col == 'EXPRESSION':
+            expression.append('EXPRESSION')
+        elif col == 'EXP':
+            expression.append('EXP')
         else:
-            ex.append(col)
+            sam.append(col)
     
-    expression = list(set(ex).difference(label_g))
+    if label_g != '':
+        sample = list(set(sam).difference(label_g))
+    else:
+        sample = sam
     
     if len(symbol) != 1:
         print("**Error: Your data has NOT SYMBOL or PROTEIN or GENE column")
@@ -29,19 +37,30 @@ def heat(file_, labels):
         print("**Error: Your data has NOT EXPRESSION column")
         exit()
 
+    if len(sample) < 1:
+        print("**Error: Your data has NOT sample column")
+        exit()
+    elif len(sample) > 1:
+        print("**Error: Your data has sample column more than 1, Please add labels if you have")
+        exit()
+
+
     new_df = pd.DataFrame()
     new_df['SYMBOL'] = df[f'{symbol[0]}']
     new_df['EXPRESSION'] = df[f'{expression[0]}']
+    new_df['SAMPLE'] = df[f'{sample[0]}']
+    d = [f"{file_[:-4]}_heatm.csv"]
     for i in label_g:
         new_df[i] = df[i]
+        d.append(i)
 
-    new_df.to_csv(f"{file_[:-4]}_heatm.csv", index=False)
+    new_df.to_csv(f"{d[0]}", index=False)
     print(">> Data for heatmap <<")
     print(new_df)
     print("-------------------------------------------------------------------------------------------------------------------------------------")
     print(">> Finished organized and Converted to DataFrame <<")
     print("-------------------------------------------------------------------------------------------------------------------------------------")
-    return(f"{file_[:-4]}_heatm.csv")
+    return(d)
 
 def venn(file_):
     pass
