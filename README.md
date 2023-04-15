@@ -34,6 +34,8 @@
 
     cd VisualizationOmicsData-VOD/
     
+    chmod -x *.sh
+    
     git pull origin main
     
     chmod +x *.sh
