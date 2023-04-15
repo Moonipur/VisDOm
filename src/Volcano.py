@@ -209,7 +209,7 @@ def plot_(data_path, up, down, non, splitLine, grid, title, save_fig, fig_name, 
         pass
 
     plt.savefig(fname=f'{fig_name}.{save_fig}', format=save_fig)
-    print(f">> Successful: Volcano plot is already generated at '{fig_name[:-4]}.{save_fig}'")
+    print(f">> Successful: Volcano plot is already generated at '{fig_name}.{save_fig}'")
     print("-------------------------------------------------------------------------------------------------------------------------------------")
 
 if __name__ == "__main__":
@@ -217,7 +217,7 @@ if __name__ == "__main__":
     outdir = Check_outdir(args.outdir)
     file = Check_file_type(args.input, outdir)
     file_df_path = Organize_file(file, type_='volcano', p=args.ptype, inter=args.interest)
-    if args.Figname != '':
+    if args.Figname == '':
         if args.ptype == 'logP_value':
             path_df = class_dot(file_df_path, log2=args.log2, threshold=args.threshold)
             plot_(
