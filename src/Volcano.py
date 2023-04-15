@@ -61,6 +61,10 @@ Parser.add_argument(
     help='the title of figure (default: Volcano plot)'
     )
 Parser.add_argument(
+    '--Figname', default='', required=False, type=str,
+    help='figure name file (default: same as name of input file)'
+    )
+Parser.add_argument(
     '--saveFig', default='png', choices=['png','pdf','svg'], required=False, type=str,
     help='type of figure file (default: png)'
     )
@@ -204,7 +208,7 @@ def plot_(data_path, up, down, non, splitLine, grid, title, save_fig, fig_name, 
     elif splitLine == 'no':
         pass
 
-    plt.savefig(fname=f'{fig_name[:-4]}.{save_fig}', format=save_fig)
+    plt.savefig(fname=f'{fig_name}.{save_fig}', format=save_fig)
     print(f">> Successful: Volcano plot is already generated at '{fig_name[:-4]}.{save_fig}'")
     print("-------------------------------------------------------------------------------------------------------------------------------------")
 
@@ -213,18 +217,35 @@ if __name__ == "__main__":
     outdir = Check_outdir(args.outdir)
     file = Check_file_type(args.input, outdir)
     file_df_path = Organize_file(file, type_='volcano', p=args.ptype, inter=args.interest)
-    if args.ptype == 'logP_value':
-        path_df = class_dot(file_df_path, log2=args.log2, threshold=args.threshold)
-        plot_(
-            path_df, up=args.upReguColor, down=args.downReguColor, non=args.nonSigniColor,
-            splitLine=args.splitLine, grid=args.gridLine, top_dot=args.topRankLabel,
-            title=args.Title, save_fig=args.saveFig, fig_name=file, interestG=args.interest
-        )
-    elif args.ptype == 'P_value':
-        log10P_df = cal_log10P(file_df_path, outdir)
-        path_df = class_dot(log10P_df, log2=args.log2, threshold=args.threshold)
-        plot_(
-            path_df, up=args.upReguColor, down=args.downReguColor, non=args.nonSigniColor,
-            splitLine=args.splitLine, grid=args.gridLine, top_dot=args.topRankLabel,
-            title=args.Title, save_fig=args.saveFig, fig_name=file, interestG=args.interest
-        )
+    if args.Figname != '':
+        if args.ptype == 'logP_value':
+            path_df = class_dot(file_df_path, log2=args.log2, threshold=args.threshold)
+            plot_(
+                path_df, up=args.upReguColor, down=args.downReguColor, non=args.nonSigniColor,
+                splitLine=args.splitLine, grid=args.gridLine, top_dot=args.topRankLabel,
+                title=args.Title, save_fig=args.saveFig, fig_name=file[:-4], interestG=args.interest
+            )
+        elif args.ptype == 'P_value':
+            log10P_df = cal_log10P(file_df_path, outdir)
+            path_df = class_dot(log10P_df, log2=args.log2, threshold=args.threshold)
+            plot_(
+                path_df, up=args.upReguColor, down=args.downReguColor, non=args.nonSigniColor,
+                splitLine=args.splitLine, grid=args.gridLine, top_dot=args.topRankLabel,
+                title=args.Title, save_fig=args.saveFig, fig_name=file[:-4], interestG=args.interest
+            )
+    else:
+        if args.ptype == 'logP_value':
+            path_df = class_dot(file_df_path, log2=args.log2, threshold=args.threshold)
+            plot_(
+                path_df, up=args.upReguColor, down=args.downReguColor, non=args.nonSigniColor,
+                splitLine=args.splitLine, grid=args.gridLine, top_dot=args.topRankLabel,
+                title=args.Title, save_fig=args.saveFig, fig_name=f'{outdir}/{args.Figname}', interestG=args.interest
+            )
+        elif args.ptype == 'P_value':
+            log10P_df = cal_log10P(file_df_path, outdir)
+            path_df = class_dot(log10P_df, log2=args.log2, threshold=args.threshold)
+            plot_(
+                path_df, up=args.upReguColor, down=args.downReguColor, non=args.nonSigniColor,
+                splitLine=args.splitLine, grid=args.gridLine, top_dot=args.topRankLabel,
+                title=args.Title, save_fig=args.saveFig, fig_name=f'{outdir}/{args.Figname}', interestG=args.interest
+            )
