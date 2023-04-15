@@ -3,7 +3,7 @@
 if [ -f ~/.bashrc ];
 then
     grep -n 'VisualizationOmicsData-VOD/src' ~/.bashrc > .meta_1;
-    line=`sed 's/:.*//g' .meta_1| sed -z 's/\n/;/g'`;
+    line=`sed 's/:.*//g' .meta_1| sed -z 's/\n/d;/g'`;
     sed 's/.*alias //g' .meta_1 | sed 's/=.*//g' > .meta_2;
     
     sed -i ${line} ~/.bashrc;
