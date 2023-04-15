@@ -2,7 +2,9 @@ import os, sys
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
+import matplotlib as mpl
+from matplotlib.cm import ScalarMappable as sm
+import scipy.cluster.hierarchy as sch
 import argparse
 import math
 

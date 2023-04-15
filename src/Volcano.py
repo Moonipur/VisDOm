@@ -30,7 +30,7 @@ Parser.add_argument(
     )
 Parser.add_argument(
     '--splitLine', choices=['yes','no'], default='yes', required=False,
-    help='would you like to show baseline for cutting-off dots? it will show in dashed-line form (default: yes)'
+    help='would you like to show baseline for cutting-off dots? it will show in dashed-line form? (default: yes)'
     )
 Parser.add_argument(
     '--gridLine', choices=['yes','no'], default='yes', required=False,
@@ -53,8 +53,8 @@ Parser.add_argument(
     help='number of top rank dot labels (default: 10)'
     )
 Parser.add_argument(
-    '--interest', default='no', required=False, choices=['yes','no'],
-    help='label the interest gene or protein dots in figure (default: no)'
+    '--interest', default='not_show', required=False, choices=['have','not_have', 'not_show'],
+    help='whould you have label the interest gene or protein dots in input file? (default: no)'
     )
 Parser.add_argument(
     '--Title', default='Volcano plot', required=False, type=str,
@@ -107,7 +107,7 @@ def class_dot(data_path, log2, threshold):
 def plot_(data_path, up, down, non, splitLine, grid, title, save_fig, fig_name, top_dot, interestG):
     df_data = pd.read_csv(data_path[0])
 
-    plt.figure(figsize=(100,100), )
+    plt.figure(figsize=(100,100))
     plt.rcParams.update({'font.size': 130})
 
     ax = plt.axes()
@@ -128,7 +128,7 @@ def plot_(data_path, up, down, non, splitLine, grid, title, save_fig, fig_name, 
     plt.scatter(x=dot_not['Log2FC'], y=dot_not['logP_value'], marker='o', s=2000, c=non)
     plt.scatter(x=dot_down['Log2FC'], y=dot_down['logP_value'], marker='o', s=2000, c=down)
 
-    if interestG == 'yes':
+    if interestG == 'have':
         inter = df_data.loc[df_data['INTEREST'] == 'interest']
         for i in inter.index:
             if inter['Class'][i] == 'DOWN':
@@ -153,7 +153,7 @@ def plot_(data_path, up, down, non, splitLine, grid, title, save_fig, fig_name, 
                     bbox=dict(boxstyle="round, pad=0.2",fc="white", alpha=0.5), fontsize=100
                     )
         
-    elif interestG == 'no':
+    elif interestG == 'not_have':
         dot_top = df_data.sort_values(by='logP_value', ascending=False, ignore_index=True)
         top_lab = dot_top.iloc[:top_dot]
         for i in top_lab.index:
@@ -178,6 +178,9 @@ def plot_(data_path, up, down, non, splitLine, grid, title, save_fig, fig_name, 
                     arrowprops=dict(arrowstyle="-|>", color='black', linewidth=4),
                     bbox=dict(boxstyle="round, pad=0.2",fc="white", alpha=0.5), fontsize=100
                     )
+    
+    elif interestG == 'not_show':
+        pass
         
 
     x_label = '$log_{2} FoldChange$'
