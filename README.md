@@ -16,7 +16,7 @@
     
     conda activate VOD
     
-    conda install pandas numpy matplotlib openpyxl math scipy
+    pip install pandas numpy matplotlib openpyxl math scipy
     
   Download VOD suite-packages with git-clone
     
