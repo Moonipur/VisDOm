@@ -6,10 +6,10 @@ if [ -f ~/.bashrc ];
 then
     for i in ${module[@]}; 
     do
-       Loc=`find "$(pwd)" -name "${i}.sh"`;
-       echo "alias ${i}='python ${Loc}'" >> ~/.bashrc;
+        Loc=`find "$(pwd)" -name "${i}.py"`;
+        echo "alias ${i}='python ${Loc}'" >> ~/.bashrc;
     done
-   echo "Installation is already finished";
+    echo "Installation is already finished";
 else
-   echo "Your .bashrc does NOT exist";
+    echo "Your .bashrc does NOT exist";
 fi
