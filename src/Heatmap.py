@@ -39,8 +39,8 @@ Parser.add_argument(
     help='x-axis label (default: level of expression)'
     )
 Parser.add_argument(
-    '-mCol','--matrixColor', default='seismic', required=False, type=str,
-    help='color of matrixes inside heatmap (default: seismic)'
+    '-mCol','--matrixColor', default='magma', required=False, type=str,
+    help='color of matrixes inside heatmap (default: magma)'
     )
 Parser.add_argument(
     '-cLab','--colorLabel', default='no', required=False, type=str, nargs='+',
