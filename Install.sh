@@ -7,6 +7,7 @@ then
     for i in ${module[@]}; 
     do
         Loc=`find "$(pwd)" -name "${i}.py"`;
+        echo ">> ${i}: installing with path ${Loc}";
         echo "alias ${i}='python ${Loc}'" >> ~/.bashrc;
     done
     echo "Installation is already finished";
