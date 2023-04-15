@@ -6,7 +6,7 @@
 
   Python (version >= 3.10)
   
-  Pandas, Numpy, Matplotlib, Openpyxl, Math, Scipy
+  Pandas, Numpy, Matplotlib, Openpyxl, Scipy
   
 # Initial installation step by step
 
@@ -16,7 +16,7 @@
     
     conda activate VOD
     
-    pip install pandas numpy matplotlib openpyxl math scipy
+    pip install pandas numpy matplotlib openpyxl scipy
     
   Download VOD suite-packages with git-clone
     
