@@ -1,6 +1,6 @@
 # Visualization of Omics Data (VOD)
 
-  Suite-software packages of python script for visualizing omics data.
+  Suite-packages of python script for visualizing omics data.
   
   **Currently, our packages is developing and only volcano plots and heatmaps are available. 
 
