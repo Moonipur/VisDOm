@@ -1,6 +1,6 @@
 # !/bin/bash
 
-module=(Bubble CopyNumber Correlation Distribution Heatmap SpL_ratio VennDiagram Volcano)
+module=(Bubble Correlation Distribution Heatmap VennDiagram Volcano)
 
 if [ -f ~/.bashrc ];
 then
