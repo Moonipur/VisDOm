@@ -3,7 +3,7 @@
   Suite-software packages of python script for visualizing omics data.
   Currently, our packages is developing and only volcano plots and heatmaps are available. 
 
-# Requirement of packages
+# Requirements
 
   Python (version >= 3.10)
   
