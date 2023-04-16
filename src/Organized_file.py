@@ -175,14 +175,51 @@ def dist(file_):
 def bubb(file_):
     pass
 
-def box(file_):
-    pass
-
 def copy(file_):
     pass
 
 def splr(file_):
-    pass
+    df = pd.read_csv(f"{file_}")
+    df.columns = df.columns.str.strip().str.upper()
+    chr = []
+    pos = []
+    SpL = []
+
+    for col in df.columns:
+        if col == 'CHROMOSOME':
+            chr.append('CHROMOSOME')
+        elif col == 'POSITION':
+            pos.append('POSITION')
+        elif col == 'SHORT_LONG':
+            SpL.append('SHORT_LONG')
+        else:
+            pass
+
+    if len(chr) != 1:
+        print("**Error: Your data has NOT Chromosome column")
+        exit()
+    
+    if len(pos) != 1:
+        print("**Error: Your data has NOT Position column")
+        exit()
+
+    if len(SpL) != 1:
+        print("**Error: Your data has NOT Short_Long column")
+        exit()
+
+    new_df = pd.DataFrame()
+    new_df['CHROMOSOME'] = df[f'{chr[0]}']
+    new_df['POSITION'] = df[f'{pos[0]}']
+    new_df['SHORT_LONG'] = df[f'{SpL[0]}']
+
+    new_df.to_csv(f"{file_[:-4]}_spl.csv", index=False)
+
+    print(">> Data for short per long ratio plot <<")
+    print(new_df)
+    print("-------------------------------------------------------------------------------------------------------------------------------------")
+    print(">> Finished organized and Converted to DataFrame <<")
+    print("-------------------------------------------------------------------------------------------------------------------------------------")
+    return(f"{file_[:-4]}_spl.csv")
 
 def corr(file_):
     pass
@@ -202,9 +239,6 @@ def Organize_file(file_csv, type_, p='', inter='', label=[]):
         return(df)
     elif type_ == 'bubble':
         df = bubb(file_csv)
-        return(df)
-    elif type_ == 'boxplot':
-        df = box(file_csv)
         return(df)
     elif type_ == 'copyNumber':
         df = copy(file_csv)
