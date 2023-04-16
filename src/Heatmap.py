@@ -109,8 +109,115 @@ def annotate_(data_path):
     print("-------------------------------------------------------------------------------------------------------------------------------------")
     return(dict_label, dict_sample)
 
+def scale_(data_path):
+    df_data = pd.read_csv(data_path[0])
+    exp_list = df_data['EXPRESSION'].values.tolist()
+    min_ = round(min(exp_list), 0)
+    max_ = round(max(exp_list), 0)
+    scale_major = []
+    scale_minor = []
+    print(min_, max_)
 
-def plot_(data_path, fig_name, save_fig, title, annot, xlab, mCol, cBar, z_score, dendro, label):
+    if abs(max_ - min_) % 2 == 0:
+        scale_major.append(min_)
+        scale_minor.append(min_)
+        median_ = abs(max_ - min_) / 2
+        print(median_)
+        if median_ % 2 == 0:
+            half_median = median_ / 2
+            scale_major.append(min_ + half_median)
+            scale_major.append(min_ + median_)
+            scale_major.append(max_ - half_median)
+            scale_major.append(max_)
+            scale_minor.append(min_ + half_median)
+            scale_minor.append(min_ + median_)
+            scale_minor.append(max_ - half_median)
+            scale_minor.append(max_)
+
+        elif median_ % 2 != 0:
+            n = 3
+            while n != 5:
+                if median_ % n == 0:
+                    cent = median_ / n
+                    if n == 3:
+                        scale_major.append(min_ + cent*2)
+                        scale_major.append(max_ - cent*2)
+                        scale_major.append(max_)
+                        scale_minor.append(min_ + cent*2)
+                        scale_minor.append(max_ - cent*2)
+                        scale_minor.append(max_)
+                    elif n == 5:
+                        scale_major.append(min_ + cent*3)
+                        scale_major.append(max_ - cent*3)
+                        scale_major.append(max_)
+                        scale_minor.append(min_ + cent*3)
+                        scale_minor.append(max_ - cent*3)
+                        scale_minor.append(max_)
+                    break
+                else:
+                    pass
+                n += 2
+
+    elif abs(max_ - min_) % 2 != 0:
+        scale_major.append(min_)
+        scale_minor.append(min_)
+        n = 3
+        while n != 7:
+            if abs(max_ - min_) % n == 0:
+                cent = abs(max_ - min_) / n
+                if n == 3:
+                    scale_major.append(min_ + cent)
+                    scale_major.append(min_ + cent*2)
+                    scale_major.append(max_)
+                    scale_minor.append(min_ + cent)
+                    scale_minor.append(min_ + cent*2)
+                    scale_minor.append(max_)
+                elif n == 5:
+                    scale_major.append(min_ + cent)
+                    scale_major.append(min_ + cent*2)
+                    scale_major.append(min_ + cent*3)
+                    scale_major.append(min_ + cent*4)
+                    scale_major.append(max_)
+                    scale_minor.append(min_ + cent)
+                    scale_minor.append(min_ + cent*2)
+                    scale_minor.append(min_ + cent*3)
+                    scale_minor.append(min_ + cent*4)
+                    scale_minor.append(max_)
+                elif n == 7:
+                    scale_major.append(min_ + cent*2)
+                    scale_major.append(min_ + cent*5)           
+                    scale_major.append(max_)
+                    scale_minor.append(min_ + cent*2)
+                    scale_minor.append(min_ + cent*5)           
+                    scale_minor.append(max_)
+                break
+            else:
+                pass
+            n += 2
+
+        if len(scale_major) == 1 and len(scale_minor) == 1:
+            two_decim = round(abs(max_ - min_), 0)
+            if two_decim % 2 == 0:
+                mid = two_decim / 2
+                scale_major.append(min_ + mid)
+                scale_major.append(max_)
+                scale_minor.append(min_ + mid)
+                scale_minor.append(max_)
+            else:
+                mid = (two_decim + 1) / 2
+                scale_major.append(min_ + mid)
+                scale_major.append(max_)
+                scale_minor.append(min_ + mid)
+                scale_minor.append(max_)
+        else:
+            pass
+
+    scale_major_n = [(change_decim_021(i)) for i in scale_major]
+    scale_minor_n = [(change_decim_021(j)) for j in scale_minor]
+    print(scale_major_n, scale_minor_n)
+    return(scale_major_n, scale_minor_n)
+
+def plot_(data_path, fig_name, save_fig, title, annot, xlab, mCol, cBar, z_score, dendro, label, scale):
     dict_figure = {
         'heat1': [
             [100,100], 
@@ -173,13 +280,17 @@ def plot_(data_path, fig_name, save_fig, title, annot, xlab, mCol, cBar, z_score
     key = [key for key, i in dict_figure.items()]
     fig_prop = [i for key, i in dict_figure.items()]
 
-    def heat_1(data, fig_prop, z, figname, type_, title, xlab, ColMat, dict_lab):
+    def heat_1(data, fig_prop, z, figname, type_, title, xlab, ColMat, dict_lab, scale_):
         df_data = pd.read_csv(data)
         mat = np.shape(df_data)
         if z == 'z-score':
             df_data = Zscore()
+            print('**Error: Sorry, this mode is unavailable')
+            exit()
         elif z == 'minMax':
             df_data = MinMax()
+            print('**Error: Sorry, this mode is unavailable')
+            exit()
         elif z == 'noNorm':
             pass
 
@@ -228,14 +339,14 @@ def plot_(data_path, fig_name, save_fig, title, annot, xlab, mCol, cBar, z_score
 
         plt.rcParams["axes.linewidth"] = 10
         Cbar = fig.add_axes(fig_prop[2])
-        norm = mpl.colors.Normalize(vmin=-4, vmax=4, clip=True)
+        norm = mpl.colors.Normalize(vmin=scale_[0][0], vmax=scale_[0][-1], clip=True)
         fig.colorbar(mappable=sm(norm=norm, cmap=ColMat), cax=Cbar, orientation='vertical')
         Cbar.set_xticks([])
         Cbar.set_yticks([])
 
         plt.tick_params('y', pad=30, length=30, width=10)
-        Cbar.set_yticks([-4, -2, 0, 2, 4])
-        Cbar.set_yticklabels([-4, -2, 0, 2, 4], minor=False)
+        Cbar.set_yticks(scale_[1])
+        Cbar.set_yticklabels(scale_[0], minor=False)
         Cbar.yaxis.set_label_position('right')
         Cbar.yaxis.tick_right()
         Cbar.set_title(xlab, fontsize=120, fontweight='bold', pad=100)
@@ -245,13 +356,17 @@ def plot_(data_path, fig_name, save_fig, title, annot, xlab, mCol, cBar, z_score
 
         plt.savefig(fname=f'{figname}.{type_}', format=type_)
 
-    def heat_1den(data, fig_prop, z, figname, type_, title, xlab, ColMat, dict_lab, dend):
+    def heat_1den(data, fig_prop, z, figname, type_, title, xlab, ColMat, dict_lab, dend, scale_):
         df_data = pd.read_csv(data)
         mat = np.shape(df_data)
         if z == 'z-score':
             df_data = Zscore()
+            print('**Error: Sorry, this mode is unavailable')
+            exit()
         elif z == 'minMax':
             df_data = MinMax()
+            print('**Error: Sorry, this mode is unavailable')
+            exit()
         elif z == 'noNorm':
             pass
 
@@ -356,14 +471,14 @@ def plot_(data_path, fig_name, save_fig, title, annot, xlab, mCol, cBar, z_score
 
         plt.rcParams["axes.linewidth"] = 10
         Cbar = fig.add_axes(fig_prop[1])
-        norm = mpl.colors.Normalize(vmin=-4, vmax=4, clip=True)
+        norm = mpl.colors.Normalize(vmin=scale_[0][0], vmax=scale_[0][-1], clip=True)
         fig.colorbar(mappable=sm(norm=norm, cmap=ColMat), cax=Cbar, orientation='horizontal')
         Cbar.set_xticks([])
         Cbar.set_yticks([])
 
         plt.tick_params('x', pad=30, length=30, width=10)
-        Cbar.set_xticks([-4, -2, 0, 2, 4])
-        Cbar.set_xticklabels([-4, -2, 0, 2, 4], minor=False)
+        Cbar.set_xticks(scale_[1])
+        Cbar.set_xticklabels(scale_[0], minor=False)
         Cbar.xaxis.set_label_position('bottom')
         Cbar.xaxis.tick_bottom()
         Cbar.set_title(xlab, fontsize=125, fontweight='bold', pad=100)
@@ -373,15 +488,19 @@ def plot_(data_path, fig_name, save_fig, title, annot, xlab, mCol, cBar, z_score
 
         plt.savefig(fname=f'{figname}.{type_}', format=type_)
 
-    def heat_2(data, fig_prop, z, figname, type_, title, xlab, ColMat, dict_lab, cBar):
+    def heat_2(data, fig_prop, z, figname, type_, title, xlab, ColMat, dict_lab, cBar, scale_):
         df_data = pd.read_csv(data)
         mat = np.shape(df_data)
         dict_mat_lab = dict_lab[1]
         dict_lab = dict_lab[0]
         if z == 'z-score':
             df_data = Zscore()
+            print('**Error: Sorry, this mode is unavailable')
+            exit()
         elif z == 'minMax':
             df_data = MinMax()
+            print('**Error: Sorry, this mode is unavailable')
+            exit()
         elif z == 'noNorm':
             pass
 
@@ -430,14 +549,14 @@ def plot_(data_path, fig_name, save_fig, title, annot, xlab, mCol, cBar, z_score
 
         plt.rcParams["axes.linewidth"] = 10
         Cbar = fig.add_axes(fig_prop[2])
-        norm = mpl.colors.Normalize(vmin=-4, vmax=4, clip=True)
+        norm = mpl.colors.Normalize(vmin=scale_[0][0], vmax=scale_[0][-1], clip=True)
         fig.colorbar(mappable=sm(norm=norm, cmap=ColMat), cax=Cbar, orientation='vertical')
         Cbar.set_xticks([])
         Cbar.set_yticks([])
 
         plt.tick_params('y', pad=30, length=30, width=10)
-        Cbar.set_yticks([-4, -2, 0, 2, 4])
-        Cbar.set_yticklabels([-4, -2, 0, 2, 4], minor=False)
+        Cbar.set_yticks(scale_[1])
+        Cbar.set_yticklabels(scale_[0], minor=False)
         Cbar.yaxis.set_label_position('right')
         Cbar.yaxis.tick_right()
         Cbar.set_title(xlab, fontsize=120, fontweight='bold', pad=100)
@@ -594,22 +713,23 @@ def plot_(data_path, fig_name, save_fig, title, annot, xlab, mCol, cBar, z_score
 
         plt.savefig(fname=f'{figname}.{type_}', format=type_)
 
-    def heat_2den(data, fig_prop, z, figname, type_, title, xlab, ColMat, dict_lab, dend, cBar):
-        pass
+    def heat_2den(data, fig_prop, z, figname, type_, title, xlab, ColMat, dict_lab, dend, cBar, scale_):
+        print('**Error: Sorry, this mode is still developing. now is unavailable !!')
+        exit()
 
     if dendro == 'no':
         if label == '':
-            heat_1(data_path, fig_prop=fig_prop[0], z=z_score, figname=fig_name, type_=save_fig, title=title, xlab=xlab, ColMat=mCol, dict_lab=annot[0])
+            heat_1(data_path, fig_prop=fig_prop[0], z=z_score, figname=fig_name, type_=save_fig, title=title, xlab=xlab, ColMat=mCol, dict_lab=annot[0], scale_=scale_)
         elif label != '' and cBar != 'no':
-            heat_2(data_path, fig_prop=fig_prop[2], z=z_score, figname=fig_name, type_=save_fig, title=title, xlab=xlab, ColMat=mCol, dict_lab=annot, cBar=cBar)
+            heat_2(data_path, fig_prop=fig_prop[2], z=z_score, figname=fig_name, type_=save_fig, title=title, xlab=xlab, ColMat=mCol, dict_lab=annot, cBar=cBar, scale_=scale)
         else:
             print('**Error: You chose label mode, please input labels color')
             exit()
     else:
         if label == '':
-            heat_1den(data_path, fig_prop=fig_prop[1], z=z_score, figname=fig_name, type_=save_fig, title=title, xlab=xlab, ColMat=mCol, dict_lab=annot[0], dend=dendro)
+            heat_1den(data_path, fig_prop=fig_prop[1], z=z_score, figname=fig_name, type_=save_fig, title=title, xlab=xlab, ColMat=mCol, dict_lab=annot[0], dend=dendro, scale_=scale)
         elif label != '' and cBar != 'no':
-            heat_2den(data_path, fig_prop=fig_prop[3], z=z_score, figname=fig_name, type_=save_fig, title=title, xlab=xlab, ColMat=mCol, dict_lab=annot, dend=dendro, cBar=cBar)
+            heat_2den(data_path, fig_prop=fig_prop[3], z=z_score, figname=fig_name, type_=save_fig, title=title, xlab=xlab, ColMat=mCol, dict_lab=annot, dend=dendro, cBar=cBar, scale_=scale)
         else:
             print('**Error: You chose label mode, please input labels color')
             exit()
@@ -623,14 +743,15 @@ if __name__ == "__main__":
     file = Check_file_type(args.input, outdir)
     file_df_path = Organize_file(file, type_='heatmap', label=args.label)
     annota = annotate_(file_df_path)
+    scale = scale_(file_df_path)
     matrix = matrix_(file_df_path, annota[0])
     if args.Figname == '':
         plot_(
             matrix, annot=annota, fig_name=file[:-4], save_fig=args.saveFig, title=args.Title, z_score=args.Norm,
-            xlab=args.labelC, mCol=args.matrixColor, cBar=args.colorLabel, dendro=args.dendrogram, label=args.label
+            xlab=args.labelC, mCol=args.matrixColor, cBar=args.colorLabel, dendro=args.dendrogram, label=args.label, scale=scale,
         )
     else:
         plot_(
             matrix, annot=annota, fig_name=f'{outdir}/{args.Figname}', save_fig=args.saveFig, title=args.Title, z_score=args.Norm,
-            xlab=args.labelC, mCol=args.matrixColor, cBar=args.colorLabel, dendro=args.dendrogram, label=args.label
+            xlab=args.labelC, mCol=args.matrixColor, cBar=args.colorLabel, dendro=args.dendrogram, label=args.label, scale=scale
         )

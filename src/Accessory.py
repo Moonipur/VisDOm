@@ -51,3 +51,26 @@ def capital_fromUp(string):
             capi.append(new_str[i].lower())
     capi = ''.join(capi)
     return(capi)
+
+def change_decim_021(intiger):
+    if intiger != 0:
+        percent = int(round(intiger, 2) * 100)
+        string_num = str(percent)
+        last2_str = string_num[-2]
+        if last2_str == '0':
+            return(int(intiger))
+        else:
+            return(round(intiger, 1))
+    else:
+        return(int(intiger))
+
+def divide_decim(intiger, divide):
+    if intiger != 0 and divide == 2:
+        percent = int(round(intiger, 2) * 100)
+        string_num = str(percent)
+        if int(string_num) % 2 == 0:
+            return(True)
+        else:
+            return(False)
+    else:
+        return(True)
