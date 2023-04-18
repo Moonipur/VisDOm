@@ -143,9 +143,9 @@ def volc(file_, p_type, inter):
     new_df['SYMBOL'] = df[f'{symbol[0]}']
     new_df['Log2FC'] = df[f'{log2fc[0]}']
 
-    if inter == 'yes':
+    if inter == 'have':
         new_df['INTEREST'] = df[f'{interest[0]}']
-    elif inter == 'no':
+    elif inter == 'not_have':
         pass
 
     if p_type == 'P_value':
@@ -211,6 +211,23 @@ def splr(file_):
     new_df['CHROMOSOME'] = df[f'{chr[0]}']
     new_df['POSITION'] = df[f'{pos[0]}']
     new_df['SHORT_LONG'] = df[f'{SpL[0]}']
+
+    print(">> Locations of NOT a number (NaN) in your input file <<")
+    n = 1
+    for index in range(len(new_df['POSITION'])):
+        if pd.isna(new_df['CHROMOSOME'][index]) == True:
+            print(f'Position {n}: {index + 1}')
+            new_df['SHORT_LONG'][index] = float('nan')
+            if len(new_df['POSITION'][index]) == len(new_df['POSITION'][index + 1]):
+                new_df['CHROMOSOME'][index] = new_df['CHROMOSOME'][index + 1]
+            else:
+                new_df['CHROMOSOME'][index] = new_df['CHROMOSOME'][index - 1]
+            n += 1
+        else:
+            pass
+    if n == 1:
+        print("-NOT have NaN")
+    print("-------------------------------------------------------------------------------------------------------------------------------------")
 
     new_df.to_csv(f"{file_[:-4]}_spl.csv", index=False)
 
