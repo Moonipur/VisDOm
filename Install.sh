@@ -1,6 +1,6 @@
 # !/bin/bash
 
-module=(Bubble Correlation Distribution Heatmap VennDiagram Volcano)
+module=(Bubble CopyNumber Correlation Distribution Heatmap SpL_ratio VennDiagram Volcano)
 
 if [ -f ~/.bashrc ];
 then
@@ -11,6 +11,16 @@ then
         echo "alias ${i}='python ${Loc}'" >> ~/.bashrc;
     done
     echo "Installation is already finished";
+    
+else if [ -f ~/.zshrc];
+    for i in ${module[@]}; 
+    do
+        Loc=`find "$(pwd)" -name "${i}.py"`;
+        echo ">> ${i}: installing with path ${Loc}";
+        echo "alias ${i}='python ${Loc}'" >> ~/.zshrc;
+    done
+    echo "Installation is already finished";
+
 else
     echo "Your .bashrc does NOT exist";
 fi
