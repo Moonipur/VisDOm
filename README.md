@@ -28,9 +28,11 @@
     
     chmod +x *.sh
     
-    ./Install.sh
+    ./Install_Window.sh
     
     source ~/.bashrc (for Window)
+    
+    ./Install_macOS.sh
     
     source ~/.zshrc (for macOS)
     
