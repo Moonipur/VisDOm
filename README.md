@@ -30,7 +30,9 @@
     
     ./Install.sh
     
-    source ~/.bashrc
+    source ~/.bashrc (for Window)
+    
+    source ~/.zshrc (for macOS)
     
   Check and update the latest version
 
@@ -44,7 +46,9 @@
     
     ./Update.sh
     
-    source ~/.bashrc
+    source ~/.bashrc (for Window)
+    
+    source ~/.zshrc (for macOS)
     
 # Developed by
 
