@@ -46,6 +46,16 @@
     
     chmod +x *.sh
     
+# New packages
+    
+    cd VisualizationOmicsData-VOD/
+    
+    chmod -x *.sh
+    
+    git pull origin main
+    
+    chmod +x *.sh
+    
     ./Update.sh
     
     source ~/.bashrc (for Window)
