@@ -108,7 +108,18 @@ def class_dot(data_path, log2, threshold):
     re = [f"{data_path[:-4]}_classDot.csv", log2, signif]
     return(re)
 
-def plot_(data_path, up, down, non, splitLine, grid, title, save_fig, fig_name, top_dot, interestG):
+def Top_dot_label(dot_name, topdot, log2):
+    Up_dot = dot_name[dot_name['Log2FC'] > log2].reset_index()
+    Down_dot = dot_name[dot_name['Log2FC'] < -log2].reset_index()
+
+    up = Up_dot.iloc[:topdot]
+    down = Down_dot.iloc[:topdot]
+    dot_lab = pd.concat([up, down], ignore_index=True)
+
+    return(dot_lab)
+
+
+def plot_(data_path, up, down, non, splitLine, grid, title, save_fig, fig_name, top_dot, interestG, log2):
     df_data = pd.read_csv(data_path[0])
 
     plt.figure(figsize=(100,100))
@@ -158,8 +169,8 @@ def plot_(data_path, up, down, non, splitLine, grid, title, save_fig, fig_name, 
                     )
         
     elif interestG == 'not_have':
-        dot_top = df_data.sort_values(by='logP_value', ascending=False, ignore_index=True)
-        top_lab = dot_top.iloc[:top_dot]
+        dot_top = df_data.sort_values(by='Log2FC', ascending=False, ignore_index=True)
+        top_lab = Top_dot_label(dot_name=dot_top, topdot=top_dot, log2=log2)
         for i in top_lab.index:
             if top_lab['Class'][i] == 'DOWN':
                 plt.annotate(
@@ -223,7 +234,7 @@ if __name__ == "__main__":
             plot_(
                 path_df, up=args.upReguColor, down=args.downReguColor, non=args.nonSigniColor,
                 splitLine=args.splitLine, grid=args.gridLine, top_dot=args.topRankLabel,
-                title=args.Title, save_fig=args.saveFig, fig_name=file[:-4], interestG=args.interest
+                title=args.Title, save_fig=args.saveFig, fig_name=file[:-4], interestG=args.interest, log2=args.log2
             )
         elif args.ptype == 'P_value':
             log10P_df = cal_log10P(file_df_path, outdir)
@@ -231,7 +242,7 @@ if __name__ == "__main__":
             plot_(
                 path_df, up=args.upReguColor, down=args.downReguColor, non=args.nonSigniColor,
                 splitLine=args.splitLine, grid=args.gridLine, top_dot=args.topRankLabel,
-                title=args.Title, save_fig=args.saveFig, fig_name=file[:-4], interestG=args.interest
+                title=args.Title, save_fig=args.saveFig, fig_name=file[:-4], interestG=args.interest, log2=args.log2
             )
     else:
         if args.ptype == 'logP_value':
@@ -239,7 +250,7 @@ if __name__ == "__main__":
             plot_(
                 path_df, up=args.upReguColor, down=args.downReguColor, non=args.nonSigniColor,
                 splitLine=args.splitLine, grid=args.gridLine, top_dot=args.topRankLabel,
-                title=args.Title, save_fig=args.saveFig, fig_name=f'{outdir}/{args.Figname}', interestG=args.interest
+                title=args.Title, save_fig=args.saveFig, fig_name=f'{outdir}/{args.Figname}', interestG=args.interest, log2=args.log2
             )
         elif args.ptype == 'P_value':
             log10P_df = cal_log10P(file_df_path, outdir)
@@ -247,5 +258,5 @@ if __name__ == "__main__":
             plot_(
                 path_df, up=args.upReguColor, down=args.downReguColor, non=args.nonSigniColor,
                 splitLine=args.splitLine, grid=args.gridLine, top_dot=args.topRankLabel,
-                title=args.Title, save_fig=args.saveFig, fig_name=f'{outdir}/{args.Figname}', interestG=args.interest
+                title=args.Title, save_fig=args.saveFig, fig_name=f'{outdir}/{args.Figname}', interestG=args.interest, log2=args.log2
             )
