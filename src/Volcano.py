@@ -109,8 +109,8 @@ def class_dot(data_path, log2, threshold):
     return(re)
 
 def Top_dot_label(dot_name, topdot, log2):
-    Up_dot = dot_name[dot_name['Log2FC'] > log2].reset_index()
-    Down_dot = dot_name[dot_name['Log2FC'] < -log2].reset_index()
+    Up_dot = dot_name[dot_name['Log2FC'] > log2].sort_values(by='logP_value', ascending=False, ignore_index=True)
+    Down_dot = dot_name[dot_name['Log2FC'] < -log2].sort_values(by='logP_value', ascending=False, ignore_index=True)
 
     up = Up_dot.iloc[:topdot]
     down = Down_dot.iloc[:topdot]
