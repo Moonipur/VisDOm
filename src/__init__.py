@@ -13,17 +13,17 @@ def Head_prog():
     -------------------------------------------------------------------------------------------------------------------------------------
     -------------------------------------------------------------------------------------------------------------------------------------
     ||                                                                                                                                 ||
-    || LIU     LIU MOOMO  AEAEAEA MOO     MOO     SEE     MOO       MOMOM MOOMOOMOO     LIU     MOOMOOMOO AEAEA  MOOMOOMO  SEE     SEE ||
-    ||  LIU   LIU   MOO  AEA      MOO     MOO    SEESE    MOO        MOM      MOOM     LIULI       MOO     AEA  MOO    MOO SEESE   SEE ||
-    ||   LIU LIU    MOO   AEAEAE  MOO     MOO   SEE SEE   MOO        MOM     MOO      LIU LIU      MOO     AEA  MOO    MOO SEE SEE SEE ||
-    ||    LIULI     MOO       AEA MOO     MOO  SEESEESEE  MOO        MOM   MOOM      LIULIULIU     MOO     AEA  MOO    MOO SEE   SESEE ||
-    ||     LIU     MOOMO AEAEAEA   MOOMOOMOO  SEE     SEE MOOMOOMOO MOMOM MOOMOOMOO LIU     LIU    MOO    AEAEA  MOOMOOMO  SEE     SEE ||
+    || LIEW   LIEW MOOMO  AEAEAEA MOO     MOO     SEE     MOO       MOMOM MOOMOOMOO     LIE     MOOMOOMOO AEAEA  MOOMOOMO  SEE     SEE ||
+    || LIEW   LIEW  MOO  AEA      MOO     MOO    SEESE    MOO        MOM      MOOM     LIEWL       MOO     AEA  MOO    MOO SEESE   SEE ||
+    ||  LIEW LIEW   MOO   AEAEAE  MOO     MOO   SEE SEE   MOO        MOM     MOO      LIE WLI      MOO     AEA  MOO    MOO SEE SEE SEE ||
+    ||    LIEWL     MOO       AEA MOO     MOO  SEESEESEE  MOO        MOM   MOOM      LIELLIEWL     MOO     AEA  MOO    MOO SEE   SESEE ||
+    ||     LIE     MOOMO AEAEAEA   MOOMOOMOO  SEE     SEE MOOMOOMOO MOMOM MOOMOOMOO LIEW   LIEW    MOO    AEAEA  MOOMOOMO  SEE     SEE ||
     ||                                                                                                                                 ||
-    ||                            MOOMOOMO  MOMOMOMO        MOOMOOMO  LIU       LIU MOOMO  AEAEAEAE  MOOMOOM                           ||
-    ||                           MOO    MOO MOM            MOO    MOO LIULI   LILIU  MOO  AEA       MOO                                ||
-    ||                           MOO    MOO MOMOMO         MOO    MOO LIU LIULI LIU  MOO  AEA        MOOMOO                            ||
-    ||                           MOO    MOO MOM            MOO    MOO LIU  LIU  LIU  MOO  AEA            MOO                           ||
-    ||                            MOOMOOMO  MOM             MOOMOOMO  LIU   L   LIU MOOMO  AEAEAEAE MOOMOOM                            ||
+    ||                            MOOMOOMO  MOMOMOMO        MOOMOOMO  LIEW     LIEW MOOMO  AEAEAEAE  MOOMOOM                           ||
+    ||                           MOO    MOO MOM            MOO    MOO LIEWL   LIEWL  MOO  AEA       MOO                                ||
+    ||                           MOO    MOO MOMOMO         MOO    MOO LIE LIEWL LIE  MOO  AEA        MOOMOO                            ||
+    ||                           MOO    MOO MOM            MOO    MOO LIE  LIE  LIE  MOO  AEA            MOO                           ||
+    ||                            MOOMOOMO  MOM             MOOMOOMO  LIE   L   LIE MOOMO  AEAEAEAE MOOMOOM                            ||
     ||                                                                                                                                 ||
     ||                                          GIFTGIFTG       MOO     PETCHPETC     MOO                                              ||
     ||                                          GIF    GIF     MOOMO       PET       MOOMO                                             ||
@@ -32,7 +32,7 @@ def Head_prog():
     ||                                          GIFTGIFTG   MOO     MOO    PET    MOO     MOO                                          ||
     ||                                                                                                                                 ||
     ||                                                                                                                                 ||
-    ||                                            Visualization of Omics Data (VOD program)                                            ||
+    ||                                           Visualization of Omics Data (VisOm program)                                           ||
     ||                                            Developed by Mr. Songphon Sutthitthasakul                                            ||
     ||                                                                                                                                 ||
     ||                                              >> CMUTEAM : CANCER RESEARCH UNIT <<                                               ||
