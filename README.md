@@ -29,14 +29,18 @@
     chmod +x *.sh
     
     ------------------------------------------------------------
+    (for Window)
+    
     ./Install_Window.sh
     
-    source ~/.bashrc (for Window)
+    source ~/.bashrc 
     
     ------------------------------------------------------------
+    (for macOS)
+    
     ./Install_macOS.sh
     
-    source ~/.zshrc (for macOS)
+    source ~/.zshrc 
     
   Check and update the latest version
 
