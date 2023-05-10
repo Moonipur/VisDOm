@@ -1,4 +1,4 @@
-# Visualization of Omics Data (VOD)
+# Visualization and Data analysis of Omics Data (VisDOm)
 
   Suite-packages for visualizing omics data.
   
@@ -14,17 +14,17 @@
 
   Create conda environment
     
-    conda create -n VOD python=3.10
+    conda create -n VisDOm python=3.10
     
     conda activate VOD
     
     pip install pandas numpy matplotlib openpyxl scipy
     
-  Download VOD suite-packages with git-clone
+  Download VisDOm suite-packages with git-clone
     
-    git clone https://github.com/Moonipur/VisualizationOmicsData-VOD.git
+    git clone https://github.com/Moonipur/VisDOm.git
     
-    cd VisualizationOmicsData-VOD/
+    cd VisDOm/
     
     chmod +x *.sh
     
@@ -44,7 +44,7 @@
     
   Check and update the latest version
 
-    cd VisualizationOmicsData-VOD/
+    cd VisDOm/
     
     chmod -x *.sh
     
@@ -54,7 +54,7 @@
     
 # New packages
     
-    cd VisualizationOmicsData-VOD/
+    cd VisDOm/
     
     chmod -x *.sh
     
