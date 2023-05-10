@@ -1,6 +1,6 @@
 # Visualization and Data analysis of Omics Data (VisDOm)
 
-  Suite-packages for visualizing omics data.
+  Suite-packages for visualizing and analyzing omics data.
   
   **Currently, our packages is developing and only volcano plots and heatmaps are available. 
 
