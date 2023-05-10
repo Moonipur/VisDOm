@@ -16,7 +16,7 @@
     
     conda create -n VisDOm python=3.10
     
-    conda activate VOD
+    conda activate VisDOm
     
     pip install pandas numpy matplotlib openpyxl scipy
     
