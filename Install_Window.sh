@@ -2,7 +2,7 @@
 
 module=(Bubble CopyNumber Correlation Distribution Heatmap SpL_ratio VennDiagram Volcano)
 
-if [[ -f ~/.bashrc ]];
+if [ -f ~/.bashrc ];
 then
     for i in ${module[@]}; 
     do
