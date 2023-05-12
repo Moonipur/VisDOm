@@ -11,6 +11,6 @@ if [ -f ~/.zshrc];
     done
     echo "Installation is already finished";
 
-else
+else;
     echo "Your .bashrc does NOT exist";
 fi
