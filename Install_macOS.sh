@@ -2,7 +2,7 @@
 
 module=(Bubble CopyNumber Correlation Distribution Heatmap SpL_ratio VennDiagram Volcano)
 
-if [ -f ~/.zshrc];
+if [ -f ~/.zshrc ];
 then
     for i in ${module[@]}; 
     do
@@ -12,6 +12,6 @@ then
     done
     echo "Installation is already finished";
 
-else;
+else
     echo "Your .bashrc does NOT exist";
 fi
