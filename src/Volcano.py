@@ -21,8 +21,8 @@ Parser.add_argument(
     help='type of p-value in input file (for chosing the choice of P_value, this program can calculate -logP_value)'
     )
 Parser.add_argument(
-    '--log2', default=2.0, required=False, type=float,
-    help='log2 FoldChange use for classifying proteins or genes in Up-regulation or Down-regulation (default: 2.0)'
+    '--log2', default=1.5, required=False, type=float,
+    help='log2 FoldChange use for classifying proteins or genes in Up-regulation or Down-regulation (default: 1.5)'
     )
 Parser.add_argument(
     '--threshold', default=0.05, required=False, type=float,
